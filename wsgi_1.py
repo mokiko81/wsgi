@@ -3,6 +3,8 @@ import datetime
 
 default = "No Value Set"
 
+today = datetime.datetime.now()
+
 body = """<html>
 <head>
 <title>Lab 3 - WSGI experiments</title>
@@ -21,11 +23,11 @@ def application(environ, start_response):
 
     response_body = body.format(
         software=environ.get('SERVER_SOFTWARE', default),
-        path="aaaa",
-        month="bbbb",
-        date="cccc",
-        year="dddd",
-        client_ip="eeee"
+        path=environ.get('SCRIPT_NAME', default),
+        month=today.strftime('%B'),
+        date=today.day,
+        year=today.year,
+        client_ip=environ.get('REMOTE_ADDR', default)
     )
     status = '200 OK'
 
